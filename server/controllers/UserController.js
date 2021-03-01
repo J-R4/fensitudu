@@ -26,8 +26,55 @@
 
 const { User, Todo } = require('../models/index.js')
 
+const {comparePassword} = require('../helpers/bcrypt.js')
+
+const jwt = require('jsonwebtoken');
+
 class UserController {
-    //
+  static register = async (req, res, next) => {
+    try {
+      let email = req.body.email
+      let password = req.body.password
+      let user = await User.create({ email, password })
+
+      res.status(201).json(user)
+    } catch (err) {
+      res.status(400).json(err)
+    }
+  }
+
+  static login = async (req, res, next) => {
+    try {
+      let email = req.body.email
+      let password = req.body.password
+      let theUser = await User.findOne({
+        where: {
+          email: email,
+        }
+      })
+      if (theUser) {
+        if (comparePassword(password, theUser.password)) {
+          let access_token = jwt.sign({
+              id: theUser.id,
+              email: theUser.email
+          }, process.env.JWT_SECRET);
+
+          res.status(200).json({ access_token })
+        } else {
+          throw {msg: "email / password is wrong"}
+        }
+      } else {
+        throw { msg: "email / password is wrong"}
+      }
+    } catch (err) {
+      let errorMessage
+
+      if (err.msg) errorMessage = err.msg
+      else errorMessage = `internal server error`
+      
+      res.status(500).json({ message: err })
+    }
+  }
 }
 
 module.exports = UserController

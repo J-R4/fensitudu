@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       validate:{
         notEmpty:{
           msg: `Status cannot be Empty`
+        },
+        isIn: {
+          args: [[`unfinished`, `work in progress`, `finished`]],
+          msg: `Value must be between unfinished / work in progress / finished`
         }
       }
     },
@@ -45,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         cannotPastDate(value) {
           let now = new Date()
           if (value < now) {
-            throw({msg: `Cannot using past date`}) // tanya ka arief
+            throw({msg: `Cannot using past date`})
           }
         }
       }
