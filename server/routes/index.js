@@ -6,8 +6,28 @@ const TodoController = require('../controllers/TodoController.js')
 
 const { authenticate, authorize } = require('../middlewares/auth.js')
 
-router.get('/', (req, res) => {
-    res.send('hello world')
+const axios = require('axios')
+
+const getYesNo = async (req, res, next) => {
+    try {
+    let theRes = await axios({
+        method: 'get',
+        url: 'https://yesno.wtf/api'
+    })
+        if (theRes) {
+            res.status(200).json(theRes.data)
+        } else {
+            throw ({
+                status: 404,
+                message: `not found in the yesno`
+            })
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+router.get('/', getYesNo, (req, res) => {
 })
 
 router.post('/login', UserController.login)
