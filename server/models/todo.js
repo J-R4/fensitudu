@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate:{
         notEmpty:{
-          msg: `Title cannot be Empty`
+          message: `Title cannot be Empty`
         }
       }
     },
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate:{
         notEmpty:{
-          msg: `Description cannot be Empty`
+          message: `Description cannot be Empty`
         }
       }
     },
@@ -35,11 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate:{
         notEmpty:{
-          msg: `Status cannot be Empty`
+          message: `Status cannot be Empty`
         },
         isIn: {
           args: [[`unfinished`, `work in progress`, `finished`]],
-          msg: `Value must be between unfinished / work in progress / finished`
+          message: `Value must be between unfinished / work in progress / finished`
         }
       }
     },
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         cannotPastDate(value) {
           let now = new Date()
           if (value < now) {
-            throw({msg: `Cannot using past date`})
+            throw({message: `Cannot using past date`})
           }
         }
       }

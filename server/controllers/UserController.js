@@ -28,54 +28,52 @@ const { User, Todo } = require('../models/index.js')
 
 const {comparePassword} = require('../helpers/bcrypt.js')
 
-const jwt = require('jsonwebtoken');
+const {generateToken} = require('../helpers/jwt.js')
 
 class UserController {
   static register = async (req, res, next) => {
     try {
-      let email = req.body.email
-      let password = req.body.password
-      let user = await User.create({ email, password })
+      let theEmail = req.body.email
+      let thePassword = req.body.password
+      let user = await User.create({ email: theEmail, password: thePassword })
+      
+      if (!user) {
+        throw ({
+          status: 400,
+          message: `Bad Request`
+        })
+      }
 
-      res.status(201).json(user)
+      res.status(201).json({id: user.id, email:user.email})
     } catch (err) {
-      next({
-        status: 400,
-        message: err ? err : `Bad Request`
-      })
+      next(err)
     }
   }
 
   static login = async (req, res, next) => {
     try {
-      let email = req.body.email
+      let theEmail = req.body.email
       let password = req.body.password
+
       let theUser = await User.findOne({
         where: {
-          email: email,
+          email: theEmail,
         }
       })
-      if (theUser) {
-        if (comparePassword(password, theUser.password)) {
-          let access_token = jwt.sign({
-              id: theUser.id,
-              email: theUser.email
-          }, process.env.JWT_SECRET || process.env.example.JWT_SECRET);
+      
+      if (theUser && comparePassword(password, theUser.password) === true) {
+          let access_token = generateToken(theUser.id,theUser.email)
 
           res.status(200).json({ access_token })
-        } else {
-          throw {msg: "email / password is wrong"}
-        }
       } else {
-        throw { msg: "email / password is wrong"}
+          throw ({
+            status: 400,
+            message: "email / password is wrong"
+          })
       }
-    } catch (err) {
-      let errorMessage
 
-      if (err.msg) errorMessage = err.msg
-      else errorMessage = `internal server error`
-      
-      res.status(500).json({ message: errorMessage })
+    } catch (err) {
+      next(err)
     }
   }
 }

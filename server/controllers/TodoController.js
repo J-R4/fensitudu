@@ -5,10 +5,15 @@ class TodoController {
     static todos = async (req, res, next) => {
         try {
             let todo = await Todo.findAll()
-
+            if (!todo) {
+                throw ({
+                    status: 404,
+                    message: `Not Found`
+                })
+            }
             res.status(200).json({todo})
         } catch (err) {
-            res.status(404).json({message:err || `Not Found`})
+            next(err)
         }
     }
 
@@ -20,18 +25,21 @@ class TodoController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                due_date: dateFormat
+                due_date: dateFormat,
+                UserId: req.currentUser.id
             }
-            let theData = Todo.create(obj)
+            let theData = await Todo.create(obj)
 
-            res.status(201).json({obj})
+            if (!theData) {
+                throw ({
+                    status: 400,
+                    message: `Bad Request`
+                })
+            }
+
+            res.status(201).json({theData})
         } catch (err) {
-            if (err.msg) {
-                    const errorMsg = err.msg
-                    res.status(400).json({message: errorMsg}) 
-                } else {
-                    res.status(500).json({message: err}) 
-                }
+            next(err)
         }
     }
 
@@ -40,9 +48,15 @@ class TodoController {
             let target = +req.params.id
             let theTodo = await Todo.findByPk(target)
 
+            if (!theTodo) {
+                throw ({
+                    status: 404,
+                    message: `cannot find the id / todo`
+                })
+            }
             res.status(200).json({theTodo})
         } catch (err) {
-            res.status(404).json({message: err})
+            next(err)
         }
     }
 
@@ -56,39 +70,79 @@ class TodoController {
                 status: data.status,
                 due_date: data.due_date
             }
+
+            let todo = await Todo.findByPk(target)
+
+            if (!todo) {
+                throw ({
+                    status: 404,
+                    message: `data not found`
+                })
+            }
+
             let update = await Todo.update(obj, {
                 where: { id: target },
                 returning: true // isi update data setelah di update
             })
+
+            if (!update[0]) {
+                throw ({
+                    status: 400,
+                    message: `Error in validation`
+                })
+            }
             res.status(200).json({update})
         } catch (err) {
-            // res.status(400).json({ message: `error in validation, kirim validation error` })
-            res.status(500).json({message: `error in server`})
+            next(err)
         }
     }
 
     static patch = async (req, res, next) => {
         try {
             let target = +req.params.id
-            let data = {status: req.body.status}
+            let data = { status: req.body.status }
+            let todo = await Todo.findByPk(target)
+
+            if (!todo) {
+                throw ({
+                    status: 404,
+                    message: `data not found`
+                })
+            }
+
             let update = await Todo.update(data, {
                 where: {
                     id: target
                 },
                 returning: true // isi update data setelah di update
             })
+
+            if (!update[0]) {
+                throw ({
+                    status: 400,
+                    message: `Error in validation`
+                })
+            }
+
             res.status(200).json({update})
         } catch (err) {
-            console.log(err)
-            // res.status(400).json({ message: `error in validation, kirim validation error` })
-            // res.status(404).json({ message: `data not found`})
-            res.status(500).json({message: `error in server`})
+            next(err)
         }
     }
 
     static delete = async (req, res, next) => {
         try {
             let target = +req.params.id
+
+            let todo = await Todo.findByPk(target)
+
+            if (!todo) {
+                throw ({
+                    status: 404,
+                    message: `data not found`
+                })
+            }
+
             let begone = await Todo.destroy({
                 where: {
                     id: target
@@ -96,8 +150,7 @@ class TodoController {
             })
             res.status(200).json({begone, message: `Todos with id ${target} has been deleted`})
         } catch (err) {
-            // res.status(404).json({ message: `error not found` })
-            res.status(500).json({ message: `error in server` })
+            next(err)
         }
     }
 }
