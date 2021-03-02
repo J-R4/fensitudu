@@ -38,7 +38,7 @@ class TodoController {
     static todosById = async (req, res, next) => {
         try {
             let target = +req.params.id
-            let theTodo = Todo.findByPk(target)
+            let theTodo = await Todo.findByPk(target)
 
             res.status(200).json({theTodo})
         } catch (err) {
@@ -94,7 +94,7 @@ class TodoController {
                     id: target
                 }
             })
-            res.status(200).json({begone})
+            res.status(200).json({begone, message: `Todos with id ${target} has been deleted`})
         } catch (err) {
             // res.status(404).json({ message: `error not found` })
             res.status(500).json({ message: `error in server` })

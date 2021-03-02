@@ -72,7 +72,7 @@ class UserController {
       if (err.msg) errorMessage = err.msg
       else errorMessage = `internal server error`
       
-      res.status(500).json({ message: err })
+      res.status(500).json({ message: errorMessage })
     }
   }
 }
