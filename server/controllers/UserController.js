@@ -39,7 +39,10 @@ class UserController {
 
       res.status(201).json(user)
     } catch (err) {
-      res.status(400).json(err)
+      next({
+        status: 400,
+        message: err ? err : `Bad Request`
+      })
     }
   }
 
@@ -57,7 +60,7 @@ class UserController {
           let access_token = jwt.sign({
               id: theUser.id,
               email: theUser.email
-          }, process.env.JWT_SECRET);
+          }, process.env.JWT_SECRET || process.env.example.JWT_SECRET);
 
           res.status(200).json({ access_token })
         } else {

@@ -2,13 +2,12 @@ ENDPOINT:
 
 1. `POST /login`
 2. `POST /register`
-3.  `GET /todos`
+3. `GET /todos`
 4. `POST /todos`
 5. `GET /todos/:id`
 6. `PUT /todos/:id`
 7. `PATCH /todos/:id`
 8. `DELETE /todos/:id`
-
 
 ## 1. `POST /login`
 
@@ -17,10 +16,8 @@ User login with email and password
 
 Request = 
  - headers =
- 
-    {
-      "access_token": "<access token>"
-    }
+
+  not needed
 
  - body = 
 
@@ -68,11 +65,7 @@ Response (201 - CREATED) =
 
 ```json
 {
-    "id": "<given id by system>",
-    "email": "<email by user>",
-    "password": "<hashed password>",
-    "updatedAt": "<date by system>",
-    "createdAt": "<date by system>"
+    "email": "<email by user>"
 }
 ```
 
