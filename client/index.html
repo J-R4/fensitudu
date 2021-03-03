@@ -4,6 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id"
+        content="641781171342-18velpmujtc06m2n7gtlbsfcnaqhpj1o.apps.googleusercontent.com">
+
+    <script> require('dotenv').config() </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <title>fensiTuDu!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
@@ -20,70 +26,539 @@
 </style>
 
 <body>
+    <script src="https://kit.fontawesome.com/60d14081e6.js" crossorigin="anonymous"></script>
 
     <!-- This is NavBar -->
-    <nav class="navbar is-success box" style="border-radius: 0px;">
-        <div class="navbar-brand" style="background-color: #ffff;">
-            <a class="navbar-item" href="/">
-                <img src="./resources/FensiTuDu.png" alt="fensi at eperiting wit dis fensitudu">
-            </a>
-        </div>
-
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-            <div class="navbar-item">
-                <a class="" href="/">
+    <nav class="level box">
+        <p class="level-item has-text-centered">
+            <button id="link-addTodo" class="button is-primary">
+                <a id="link-addTodo" href="/">
+                    Add ToDo
+                </a>
+            </button>
+        </p>
+        <p class="level-item has-text-centered">
+            <button id="link-todo" class="button is-primary">
+                <a id="link-todo" href="/">
                     ToDoList
                 </a>
-            </div>
-        </div>
+            </button>
+        </p>
+        <p class="level-item has-text-centered">
+            <a id="link-home" class="navbar-item" href="/" style="border-color: rgb(187, 233, 195);">
+                <i class="fas fa-home"></i>
+            </a>
+        </p>
+        <p class="level-item has-text-centered">
+            <button id="link-feo" class="button is-primary">
+                <a id="link-feo" class="link is-info"
+                    href="https://www.youtube.com/watch?v=Ida9KWfFTG4&ab_channel=DailyPicksandFlicks">
+                    forYourEyesOnly
+                </a>
+            </button>
+        </p>
+        <p class="level-item has-text-centered">
+            <button id="link-logout" class="button is-primary">
+                <a id="link-logout" onclick="signOut()" ; href="#">
+                    logout
+                </a>
+            </button>
+        </p>
     </nav>
-
-    <section class="section">
+    <!-- This is the end of NavBar -->
+    <section class="section" id="form-login">
 
         <div class="columns">
 
+            <!-- This is Welcoming Title -->
+            <div class="column">
+                <div class="container"
+                    style="display: flex; justify-content: center; align-items: center; align-content: center;">
+
+                    <div>
+                        <h1 class="title">
+                            welkom gud pipel tu
+                        </h1>
+
+                        <img src="./resources/FensiTuDu.png" alt="fensi at eperiting wit dis fensitudu">
+
+                    </div>
+                </div>
+            </div>
+            <!-- This is the end of Welcoming Title -->
+
+            <!-- This is Form login -->
             <div class="column is-half"
                 style="display: flex; justify-content: center; align-items: center; align-content: center;">
-                <!-- This is Form login -->
                 <div style="display: flex; justify-content: center; align-items: center; align-content: center;">
-                    <form class="box" style="box-shadow: 10px 10px 30px rgb(187, 233, 195);">
+                    <form class="box" style="box-shadow: 1px 5px 50px rgb(159, 231, 225);">
+                        <div>
+                            <p style="margin: 0px 0px 10px 0px;">
+                                Login
+                            </p>
+                        </div>
                         <div class="field">
                             <label class="label">Email</label>
-                            <div class="control">
-                                <input class="input" type="email" placeholder="e.g. alex@example.com">
+                            <div class="control has-icons-left">
+                                <input class="input" id="email" type="email" placeholder="e.g. PogChamp@example.com">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-dove"></i>
+                                </span>
                             </div>
                         </div>
 
                         <div class="field">
                             <label class="label">Password</label>
-                            <div class="control">
-                                <input class="input" type="password" placeholder="********">
+                            <div class="control has-icons-left">
+                                <input class="input" id="password" type="password" placeholder="********">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-key"></i>
+                                </span>
                             </div>
                         </div>
 
-                        <button class="button is-primary">Sign in</button>
+                        <button type="submit" id="link-login" class="button is-primary">Login</button>
+                        <button id="link-register-reg" class="button is-success is-light">Register</button>
+                        <br><br>
+                        <div>
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
                     </form>
                 </div>
             </div>
-
-            <div class="column">
-                <div class="container">
-                    <!-- This is Welcoming Title -->
-
-                    <h1 class="title">
-                        welkom gud pipel tu
-                    </h1>
-
-                    <div>
-                        <img src="./resources/FensiTuDu.png" alt="fensi at eperiting wit dis fensitudu">
-                    </div>
-                </div>
-            </div>
+            <!-- This is the end of login page -->
 
         </div>
 
         </div>
     </section>
+
+    <section class="section" id="form-register">
+        <div class="columns">
+            <!-- This is Welcoming Title -->
+            <div class="column">
+                <div class="container"
+                    style="display: flex; justify-content: center; align-items: center; align-content: center;">
+
+                    <div>
+                        <h1 class="title">
+                            welkom gud pipel tu
+                        </h1>
+
+                        <img src="./resources/FensiTuDu.png" alt="fensi at eperiting wit dis fensitudu">
+
+                    </div>
+                </div>
+            </div>
+            <!-- This is the end of Welcoming Title -->
+
+            <!-- This is Form register -->
+            <div class="column is-half"
+                style="display: flex; justify-content: center; align-items: center; align-content: center;">
+                <div style="display: flex; justify-content: center; align-items: center; align-content: center;">
+                    <form class="box" style="box-shadow: 1px 5px 50px rgb(159, 231, 225);">
+                        <div class="b">
+                            <p style="margin-bottom: 10px;">
+                                Register
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left">
+                                <input class="input" id="email-reg" type="email"
+                                    placeholder="e.g. PogChamp@example.com">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-dove"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control has-icons-left">
+                                <input class="input" id="password-reg" type="password" placeholder="********">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="link-register" class="button is-primary">Register</button>
+                        <button id="link-login-reg" class="button is-success is-light">Login</button>
+                    </form>
+                </div>
+            </div>
+            <!-- This is the end of Form register -->
+
+            <!-- This is todo page -->
+            <section class="section" id="todoPage">
+                <div class="">
+                    <table>
+                        <thead>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                        </thead>
+                        <tbody id="todoList">
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- This is the end of todo page -->
+
+            <!-- This is add todo page -->
+            <section class="section" id="addTodoPage">
+                <form onsubmit="addTodo(event)">
+                    <div class="control">
+                        <textarea id="add-title" class="textarea is-success" placeholder="the title here"
+                            required></textarea>
+                        <textarea id="add-description" class="textarea is-success" placeholder="the description here"
+                            required></textarea>
+                        <div id="add-status" class="select is-success">
+                            <select required>
+                                <option>Unfinished</option>
+                                <option>Work in Progress</option>
+                                <option>Finished</option>
+                            </select>
+                        </div>
+                        <input id="add-due_date" type="date" required>
+                        <input id="link-addTodo" type="submit" value="add todo">
+                    </div>
+                </form>
+            </section>
+            <!-- This is the end of add todo page -->
+
+            <!-- This is edit todo page -->
+            <section class="section" id="editTodoPage">
+                <form onsubmit="putTodo(event)">
+                    <div class="control">
+                        <textarea id="add-title" class="textarea is-success" placeholder="the title here"
+                            required></textarea>
+                        <textarea id="add-description" class="textarea is-success" placeholder="the description here"
+                            required></textarea>
+                        <div id="add-status" class="select is-success">
+                            <select required>
+                                <option>Unfinished</option>
+                                <option>Work in Progress</option>
+                                <option>Finished</option>
+                            </select>
+                        </div>
+                        <input id="add-due_date" type="date" required>
+                        <input id="link-putTodo" type="submit" value="add todo">
+                    </div>
+                </form>
+            </section>
+            <!-- This is the end of edit todo page -->
+        </div>
+
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        const baseURL = "https://localhost:3000"
+
+        $("document").ready(function () {
+            checkLocalStorage()
+
+            $("#link-home").on("click", function (e) {
+                e.preventDefault();
+                $("#form-login").hide();
+                $("#form-register").hide();
+                $("#link-addTodo").show();
+                $("#link-logout").show();
+                $("#todoPage").hide();
+            })
+
+            $("#link-login-reg").on("click", function (e) {
+                e.preventDefault();
+                $("#form-login").show();
+                $("#form-register").hide();
+                $("#link-addTodo").hide();
+                $("#link-logout").hide();
+                $("#todoPage").hide();
+                $("#editTodoPage").hide();
+                $("#addTodoPage").hide();
+            })
+
+            $("#link-register-reg").on("click", function (e) {
+                e.preventDefault();
+                $("#form-login").hide();
+                $("#form-register").show();
+                $("#link-addTodo").hide();
+                $("#link-logout").hide();
+                $("#todoPage").hide();
+                $("#editTodoPage").hide();
+                $("#addTodoPage").hide();
+            })
+
+            $("#link-login").on("click", function (e) {
+                e.preventDefault();
+                login()
+            })
+
+            $("#link-register").on("click", function (e) {
+                e.preventDefault();
+                register()
+            })
+
+            $("#link-logout").on("click", function (e) {
+                e.preventDefault();
+                logout()
+            })
+
+            $("#link-addTodo").on("click", function (e) {
+                e.preventDefault();
+                $("#addTodoPage").show()
+                addTodo()
+            })
+
+            $("#link-putTodo").on("click", function (e) {
+                e.preventDefault();
+                putTodo()
+            })
+
+            $("#link-deleteTodo").on("click", function (e) {
+                e.preventDefault();
+                deleteTodo()
+            })
+        })
+
+        function login() {
+            const email = $("#email").val()
+            const password = $("#password").val()
+            console.log('masuk nih')
+            $.ajax({
+                url: baseURL + "/login",
+                method: "POST",
+                data: {
+                    email,
+                    password
+                }
+            })
+                .done((response) => {
+                    console.log(response)
+                    localStorage.setItem("access_token", response.access_token) // param 1 itu utk nama local storagenya, param 2 itu data token yang didapet dari generate token di login
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+                .always(() => { // selalu dilakukan, sehingga email dan password setelah digunakan selalu di ubah value menjadi empty string 
+                    $("#email").val("")
+                    $("#password").val("")
+                })
+        }
+
+        function register() {
+            const email = $("#email").val()
+            const password = $("#password").val()
+            console.log('masuk nih')
+            $.ajax({
+                url: baseURL + "/register",
+                method: "POST",
+                data: {
+                    email,
+                    password
+                }
+            })
+                .done((response) => {
+                    console.log(response)
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+                .always(() => { // selalu dilakukan, sehingga email dan password setelah digunakan selalu di ubah value menjadi empty string 
+                    $("#email").val("")
+                    $("#password").val("")
+                })
+        }
+
+        function checkLocalStorage() {
+            if (localStorage.access_token) {
+                $("#form-login").hide();
+                $("#form-register").hide();
+                $("#link-addTodo").show();
+                $("#link-logout").show();
+                $("#todoPage").show();
+                fetchTodos()
+            } else {
+                $("#form-login").show();
+                $("#form-register").hide();
+                $("#link-addTodo").hide();
+                $("#link-logout").hide();
+                $("#todoPage").hide();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("access_token")
+        }
+
+        function fetchTodos() {
+            $("#todoList").empty();
+            $.ajax({
+                url: baseURL + "/todos",
+                method: "GET",
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+                .done(response => {
+                    console.log(response)
+                    const allTodo = response.todo // books ini di dapet dari findAll di controller
+
+                    allTodo.forEach(el => {
+
+
+                        $("#todoList").append(
+                            `
+                            <tr>
+                                <td>${el.title}</td>
+                                <td>${el.description}</td>
+                                <td>${el.status}</td>
+                                <td>${el.due_date}</td>
+                            </tr>
+                            `
+                        )
+                    });
+
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+        }
+
+        function deleteTodo(id) { // ditaro di on click button pas di script yang ada di fetch booknya (button di website )
+            $.ajax({
+                url: baseURL + "todos/" + id,
+                method: "DELETE",
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+                .done(() => {
+                    fetchTodo()
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+        }
+
+        function addTodo() {
+            const title = $("#add-title").val()
+            const description = $("#add-description").val()
+            const status = $("#add-status").val()
+            const due_date = $("#add-due_date").val()
+
+            $.ajax({
+                url: baseURL + "/todos",
+                method: "POST",
+                headers: {
+                    access_token: localStorage.access_token
+                },
+                data: {
+                    title, description, status, due_date
+                }
+            })
+                .done(() => {
+                    fetchBooks()
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+                .always(() => {
+                    $("#add-title").val("")
+                    $("#add-description").val("")
+                    $("#add-status").val("")
+                    $("#add-due_date").val("")
+                })
+        }
+
+        function putTodo(id) {
+            const title = $("#add-title").val()
+            const description = $("#add-description").val()
+            const status = $("#add-status").val()
+            const due_date = $("#add-due_date").val()
+
+            $.ajax({
+                url: baseURL + "/todos" + id,
+                method: "PUT",
+                headers: {
+                    access_token: localStorage.access_token
+                },
+                data: {
+                    title, description, status, due_date
+                }
+            })
+                .done((response) => {
+                    fetchTodos()
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+                .always(() => {
+                    $("#add-title").val("")
+                    $("#add-description").val("")
+                    $("#add-status").val("")
+                    $("#add-due_date").val("")
+                })
+        }
+
+        function onSignIn(googleUser) {
+            const id_token = googleUser.getAuthResponse().id_token;
+
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:3000/loginGoogle",
+                data: {
+                    google_token: id_token,
+                }
+            })
+                .done((response) => {
+                    console.log(response)
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+        }
+
+        const { OAuth2Client } = require('google-auth-library');
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        async function verify() {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+                // Or, if multiple clients access the backend:
+                //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+            });
+            const payload = ticket.getPayload();
+            const userid = payload['sub'];
+            // If request specified a G Suite domain:
+            // const domain = payload['hd'];
+        }
+        verify().catch(console.error);
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+
+    </script>
+
 </body>
+
+
+<footer>
+    <div class="box">
+        <!-- <p style="text-align: center; font-size: 10px;">
+            the brewer: Joshua Fanera
+        </p> -->
+    </div>
+</footer>
 
 </html>
