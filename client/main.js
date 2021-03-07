@@ -195,14 +195,18 @@ function createTodo() {
         },
     })
         .done((response) => {
+            $('#addTodoForm').hide();
             view();
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            // console.log({ xhr, text });
+            // console.log(xhr.message);
+            // console.log(text.detail, `this is text`);
+            // console.log(response.message, `this is xhr`);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `there is some minor mistake in your code`,
             });
         })
         .always(() => {
@@ -276,8 +280,8 @@ function fetchTodos() {
                 );
             });
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -330,8 +334,8 @@ function addTodo() {
         .done(() => {
             fetchTodos();
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -366,8 +370,8 @@ function getTodo(id) {
             localStorage.setItem('theData', response); // untuk olah data di valuenya
             $('#editTodoForm').show();
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -407,8 +411,8 @@ function putTodo() {
             localStorage.removeItem('theData');
             view();
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -440,7 +444,7 @@ function weatherApi() {
                 `
                 <div class="m-0" style="display: flex; justify-content: center; ">
                       <div class="d-flex">
-                          <h6 class="flex-grow-1">${data.name}</h6>
+                          <h6 class="flex-grow-1">${data.name}</h6> <br>
                           <h6>${new Date().getHours()}:${
                     new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()
                 }</h6>
@@ -462,8 +466,8 @@ function weatherApi() {
       `
             );
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
         });
 }
 
@@ -489,8 +493,8 @@ function quotesApi() {
       `
             );
         })
-        .fail((err) => {
-            console.log(err);
+        .fail((xhr, text) => {
+            console.log(xhr, text);
         });
 }
 

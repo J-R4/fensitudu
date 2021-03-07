@@ -1,4 +1,4 @@
-ENDPOINT: 
+ENDPOINT:
 
 1. `POST /login`
 2. `POST /register`
@@ -8,30 +8,36 @@ ENDPOINT:
 6. `PUT /todos/:id`
 7. `PATCH /todos/:id`
 8. `DELETE /todos/:id`
+9. `POST /oAuth/`
+10. `GET /weather`
+11. `GET /quotes`
+12. `GET /`
 
 ## 1. `POST /login`
 
 Description =
 User login with email and password
 
-Request = 
- - headers =
+Request =
 
-  not needed
+-   headers =
 
- - body = 
+not needed
 
-    ```json
-    {
-      "email": "<email>",
-      "password": "<password>"
-    }
-    ```
-Response (200 - OK) = 
+-   body =
+
+        ```json
+        {
+          "email": "<email>",
+          "password": "<password>"
+        }
+        ```
+
+    Response (200 - OK) =
 
 ```json
 {
-  "access_token": "<access token>"
+    "access_token": "<access token>"
 }
 ```
 
@@ -39,7 +45,7 @@ Response (500 - Internal Server Error)
 
 ```json
 {
-  "message": "<internal server Error message>"
+    "message": "<internal server Error message>"
 }
 ```
 
@@ -49,15 +55,16 @@ Description =
 new User can register with unique email and their password
 
 Request =
-  - headers =
+
+-   headers =
     not needed
 
-  - body =
+-   body =
 
     ```json
     {
-      "email": "<email>",
-      "password": "<password>"
+        "email": "<email>",
+        "password": "<password>"
     }
     ```
 
@@ -73,40 +80,40 @@ Response (400 - BAD REQUEST) =
 
 ```json
 {
-  "message": "<bad request message>"
+    "message": "<bad request message>"
 }
 ```
 
-
 ## 3. `GET /todos`
 
-Description = 
+Description =
 
 User can get list of all the todos
 
-Request = 
- - headers =
- 
+Request =
+
+-   headers =
+
     {
-      "access_token": "<access token>"
+    "access_token": "<access token>"
     }
 
- - body =
+-   body =
 
     not needed
 
-Response (200 - OK) = 
+Response (200 - OK) =
 
 ```json
 {
-  "id": "<given id by system>",
-  "title": "<todos title>",
-  "description": "<todos description>",
-  "status": "<todos status>",
-  "due_date": "<todos due_date>",
-  "UserId": "<todos association>",
-  "createdAt": "<date by system>",
-  "updatedAt": "<date by system>"
+    "id": "<given id by system>",
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status>",
+    "due_date": "<todos due_date>",
+    "UserId": "<todos association>",
+    "createdAt": "<date by system>",
+    "updatedAt": "<date by system>"
 }
 ```
 
@@ -114,7 +121,7 @@ Response (404 - NOT FOUND) =
 
 ```json
 {
-  "message": "<Not Found message>"
+    "message": "<Not Found message>"
 }
 ```
 
@@ -125,37 +132,38 @@ Description =
 User can create their own todo
 
 Request =
- - headers =
- 
+
+-   headers =
+
     {
-      "access_token": "<access token>"
+    "access_token": "<access token>"
     }
 
- - body =
+-   body =
 
     {
-      "title": "<todos title>",
-      "description": "<todos description>",
-      "status": "<todos status>",
-      "due_date": "<todos due_date>"
-    } 
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status>",
+    "due_date": "<todos due_date>"
+    }
 
-Response (201 - CREATED) = 
+Response (201 - CREATED) =
 
 {
-    "obj": {
-        "title": "<todos title>",
-        "description": "<todos description>",
-        "status": "<todos status>",
-        "due_date": "<todos due_date>"
-    }
-} 
+"obj": {
+"title": "<todos title>",
+"description": "<todos description>",
+"status": "<todos status>",
+"due_date": "<todos due_date>"
+}
+}
 
 Response (400 - BAD REQUEST) =
 
 ```json
 {
-  "message": "<bad request message>"
+    "message": "<bad request message>"
 }
 ```
 
@@ -163,24 +171,25 @@ Response (500 - INTERNAL SERVER ERROR) =
 
 ```json
 {
-  "message": "<internal server message>"
+    "message": "<internal server message>"
 }
 ```
 
 ## 5. `GET /todos/:id`
 
-Description = 
+Description =
 
-User can get todos by the id 
+User can get todos by the id
 
-Request = 
- - headers =
- 
+Request =
+
+-   headers =
+
     {
-      "access_token": "<access token>"
+    "access_token": "<access token>"
     }
 
- - body =
+-   body =
 
     not needed
 
@@ -188,14 +197,14 @@ Response (200 - OK ) =
 
 ```json
 {
-  "id": "<given id by system>",
-  "title": "<todos title>",
-  "description": "<todos description>",
-  "status": "<todos status>",
-  "due_date": "<todos due_date>",
-  "UserId": "<todos association>",
-  "createdAt": "<date by system>",
-  "updatedAt": "<date by system>"
+    "id": "<given id by system>",
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status>",
+    "due_date": "<todos due_date>",
+    "UserId": "<todos association>",
+    "createdAt": "<date by system>",
+    "updatedAt": "<date by system>"
 }
 ```
 
@@ -203,7 +212,7 @@ Response (404 - NOT FOUND) =
 
 ```json
 {
-  "message": "<not found message>"
+    "message": "<not found message>"
 }
 ```
 
@@ -214,33 +223,34 @@ Description =
 User can update the todos according to its id
 
 Request =
- - headers =
- 
+
+-   headers =
+
     {
-      "access_token": "<access token>"
+    "access_token": "<access token>"
     }
 
- - body =
+-   body =
 
     {
-      "title": "<todos title>",
-      "description": "<todos description>",
-      "status": "<todos status>",
-      "due_date": "<todos due_date>"
-    } 
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status>",
+    "due_date": "<todos due_date>"
+    }
 
 Response (200 - OK ) =
 
 ```json
 {
-  "id": "<given id by system>",
-  "title": "<todos title>",
-  "description": "<todos description>",
-  "status": "<todos status>",
-  "due_date": "<todos due_date>",
-  "UserId": "<todos association>",
-  "createdAt": "<date by system>",
-  "updatedAt": "<date by system>"
+    "id": "<given id by system>",
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status>",
+    "due_date": "<todos due_date>",
+    "UserId": "<todos association>",
+    "createdAt": "<date by system>",
+    "updatedAt": "<date by system>"
 }
 ```
 
@@ -248,7 +258,7 @@ Response (400 - BAD REQUEST) =
 
 ```json
 {
-  "message": "bad request message"
+    "message": "bad request message"
 }
 ```
 
@@ -256,7 +266,7 @@ Response (500 - INTERNAL ERROR) =
 
 ```json
 {
-  "message": "<internal error message>"
+    "message": "<internal error message>"
 }
 ```
 
@@ -266,34 +276,34 @@ Description =
 
 User can update the status of todos to become finished / work in progress / unfinished
 
-Request = 
+Request =
 
-  - header =
+-   header =
 
-  {
-    "access_token": "<access token>"
-  }
+{
+"access_token": "<access token>"
+}
 
-  - body = 
+-   body =
 
-  (radio button)
+(radio button)
 
-  {
-    "status": "<value of the selection between finished or work in progress or unfinished>"
-  }
+{
+"status": "<value of the selection between finished or work in progress or unfinished>"
+}
 
 Response (200 - OK) =
 
 ```json
 {
-  "id": "<given id by system>",
-  "title": "<todos title>",
-  "description": "<todos description>",
-  "status": "<todos status depends of the chosen value of the selection>",
-  "due_date": "<todos due_date>",
-  "UserId": "<todos association>",
-  "createdAt": "<date by system>",
-  "updatedAt": "<date by system>"
+    "id": "<given id by system>",
+    "title": "<todos title>",
+    "description": "<todos description>",
+    "status": "<todos status depends of the chosen value of the selection>",
+    "due_date": "<todos due_date>",
+    "UserId": "<todos association>",
+    "createdAt": "<date by system>",
+    "updatedAt": "<date by system>"
 }
 ```
 
@@ -301,7 +311,7 @@ Response (400 - BAD REQUEST) =
 
 ```json
 {
-  "message": "<bad request message>"
+    "message": "<bad request message>"
 }
 ```
 
@@ -309,7 +319,7 @@ Response (404 - NOT FOUND) =
 
 ```json
 {
-  "message": "<not found message>"
+    "message": "<not found message>"
 }
 ```
 
@@ -317,7 +327,7 @@ Response (500 - INTERNAL ERROR) =
 
 ```json
 {
-  "message": "<internal error message>"
+    "message": "<internal error message>"
 }
 ```
 
@@ -327,21 +337,21 @@ Description =
 
 User can delete the todos by their selection according to its id
 
-Request = 
+Request =
 
-  - header =
+-   header =
     {
-      "access_token": "<access token>"
+    "access_token": "<access token>"
     }
 
-  - body = 
+-   body =
     not needed
 
 Response (200 - OK) =
 
 ```json
 {
-  "message": "<delete message>"
+    "message": "<delete message>"
 }
 ```
 
@@ -349,7 +359,7 @@ Response (404 - NOT FOUND) =
 
 ```json
 {
-  "message": "<not found message>"
+    "message": "<not found message>"
 }
 ```
 
@@ -357,29 +367,25 @@ response (500 - INTERNAL SERVER ERROR) =
 
 ```json
 {
-  "message": "<internal server error message>"
+    "message": "<internal server error message>"
 }
 ```
-==================================================================
 
+`(ini punya kak fiqi)`
 
-``` (ini punya kak fiqi) ```
-
-My Assets App Server 
+My Assets App Server
 My Assets App is an application to manage your assets. It performs standard CRUD actions based on RESTful concept.
 
 This app has :
 
 RESTful endpoint for asset's CRUD operation
 JSON formatted response
- 
 
 Tech Stack used to build this app :
 
 Node JS
 Express JS framework
 PostgreSQL
- 
 
 Global Responses
 These responses are applied globally on all endpoints
@@ -387,15 +393,14 @@ These responses are applied globally on all endpoints
 Response (400 - Bad Request)
 
 {
-  "message": "<your message for 400>"
+"message": "<your message for 400>"
 }
 
 Response (401 - Unauthorized)
 
 {
-  "message": "<your message for 401>"
+"message": "<your message for 401>"
 }
- 
 
 RESTful endpoints
 GET /assets
@@ -404,7 +409,7 @@ Get all assets
 Request Header
 
 {
-  "access_token": "<your access token>"
+"access_token": "<your access token>"
 }
 Request Body
 
@@ -412,20 +417,20 @@ not needed
 Response (200)
 
 [
-  {
-    "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
+{
+"id": 1,
+"name": "<asset name>",
+"description": "<asset description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
+},
+{
+"id": 2,
+"name": "<asset name>",
+"description": "<asset description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
+}
 ]
 GET /assets/:id
 Get single asset as defined by the id provided
@@ -433,7 +438,7 @@ Get single asset as defined by the id provided
 Request Header
 
 {
-  "access_token": "<your access token>"
+"access_token": "<your access token>"
 }
 Request Body
 
@@ -441,11 +446,11 @@ not needed
 Response (200)
 
 {
-  "id": 1,
-  "name": "<asset name>",
-  "description": "<asset description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+"id": 1,
+"name": "<asset name>",
+"description": "<asset description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
 }
 POST /assets
 Create new asset
@@ -453,22 +458,22 @@ Create new asset
 Request Header
 
 {
-  "access_token": "<your access token>"
+"access_token": "<your access token>"
 }
 Request Body
 
 {
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
+"name": "<name to get insert into>",
+"description": "<description to get insert into>"
 }
 Response (201 - Created)
 
 {
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+"id": <given id by system>,
+"name": "<posted name>",
+"description": "<posted description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
 }
 PUT /assets/:id
 Update an asset defined by the id provided
@@ -476,22 +481,22 @@ Update an asset defined by the id provided
 Request Header
 
 {
-  "access_token": "<your access token>"
+"access_token": "<your access token>"
 }
 Request Body
 
 {
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
+"name": "<name to get insert into>",
+"description": "<description to get insert into>"
 }
 Response (200 - OK)
 
 {
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+"id": <given id by system>,
+"name": "<posted name>",
+"description": "<posted description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
 }
 DELETE /assets/:id
 Delete an asset defined by the id provided
@@ -499,7 +504,7 @@ Delete an asset defined by the id provided
 Request Header
 
 {
-  "access_token": "<your access token>"
+"access_token": "<your access token>"
 }
 Request Body
 
@@ -507,14 +512,14 @@ not needed
 Response (200 - OK) - Alternative 1
 
 {
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+"id": <given id by system>,
+"name": "<posted name>",
+"description": "<posted description>",
+"createdAt": "2020-03-20T07:15:12.149Z",
+"updatedAt": "2020-03-20T07:15:12.149Z",
 }
 Response (200 - OK) - Alternative 2
 
 {
-  "message": "asset successfully deleted"
+"message": "asset successfully deleted"
 }
