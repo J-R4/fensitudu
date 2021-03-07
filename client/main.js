@@ -73,6 +73,9 @@ $('document').ready(function () {
 
 function view() {
     if (localStorage.access_token) {
+        weatherApi();
+        quotesApi();
+        fetchTodos();
         $('#form-login').hide();
         $('#form-register').hide();
         $('#navBar').show();
@@ -80,9 +83,9 @@ function view() {
         $('#todoPage').show();
         $('#addTodoForm').hide();
         $('#editTodoForm').hide();
-        weatherApi();
-        fetchTodos();
-        quotesApi();
+        $('#weather-page').show();
+        $('#qoutes-page').show();
+        $('#home-page').show();
     } else {
         $('#form-login').show();
         $('#form-register').hide();
@@ -112,7 +115,7 @@ function login() {
             console.log(response);
             Swal.fire({
                 title: 'Appruf!',
-                text: 'les go tu ur tuduLis!',
+                text: 'les go tu ur tuduLis! press F5 / refresh or click the ToDoList button at the top',
                 icon: 'success',
                 width: 600,
                 padding: '3em',
@@ -123,7 +126,6 @@ function login() {
                         `,
             });
             localStorage.setItem('access_token', response.access_token); // param 1 itu utk nama local storagenya, param 2 itu data token yang didapet dari generate token di login
-            fetchTodos();
             view();
         })
         .fail((xhr, text) => {
@@ -213,6 +215,19 @@ function createTodo() {
 
 function logout() {
     localStorage.removeItem('access_token');
+    Swal.fire({
+        title: 'Do you want to logout?',
+        showDenyButton: true,
+        confirmButtonText: `Logout`,
+        denyButtonText: `Cancel`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            Swal.fire('okay!', '', 'success');
+        } else if (result.isDenied) {
+            Swal.fire('u will be here again', '', 'info');
+        }
+    });
     view();
     signOut();
     Swal.fire({
