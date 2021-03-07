@@ -1,52 +1,38 @@
-const router = require('express').Router()
+const router = require('express').Router();
 
-const Controller = require('../controllers/Controller.js')
-const UserController = require('../controllers/UserController.js')
-const TodoController = require('../controllers/TodoController.js')
+const ApiController = require('../controllers/ApiController.js');
+const UserController = require('../controllers/UserController.js');
+const TodoController = require('../controllers/TodoController.js');
 
-const { authenticate, authorize } = require('../middlewares/auth.js')
+const { authenticate, authorize } = require('../middlewares/auth.js');
 
-const axios = require('axios')
+//Api Controller
+router.get('/', ApiController.getYesNo);
 
-const getYesNo = async (req, res, next) => {
-    try {
-    let theRes = await axios({
-        method: 'get',
-        url: 'https://yesno.wtf/api'
-    })
-        if (theRes) {
-            res.status(200).json(theRes.data)
-        } else {
-            throw ({
-                status: 404,
-                message: `not found in the yesno`
-            })
-        }
-    } catch (err) {
-        next(err)
-    }
-}
+router.get('/weather', ApiController.getWeather);
+router.get('/quotes', ApiController.quotes);
 
-router.get('/', getYesNo, (req, res) => {
-})
+//User Controller
+router.post('/login', UserController.login);
+router.post('/oAuth', UserController.loginGoogle);
 
-router.post('/login', UserController.login)
+router.post('/register', UserController.register);
 
-router.post('/register', UserController.register)
+router.use(authenticate);
 
-router.use(authenticate)
+//TDController
 
-router.get('/todos', TodoController.todos)
-router.post('/todos', TodoController.postTodos)
+router.get('/todos', TodoController.todos);
+router.post('/todos', TodoController.postTodos);
 
-router.use(authorize)
+router.use(authorize);
 
-router.get('/todos/:id', TodoController.todosById)
+router.get('/todos/:id', TodoController.todosById);
 
-router.put('/todos/:id', TodoController.put)
+router.put('/todos/:id', TodoController.put);
 
-router.patch('/todos/:id', TodoController.patch)
+router.patch('/todos/:id', TodoController.patch);
 
-router.delete('/todos/:id', TodoController.delete)
+router.delete('/todos/:id', TodoController.delete);
 
-module.exports = router
+module.exports = router;
