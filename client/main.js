@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000';
+const baseURL = 'http://localhost:3000'; // ganti dengan url yang heroku
 
 $('document').ready(function () {
     view();

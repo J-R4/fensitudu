@@ -1,21 +1,24 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const port = 3000   
+if (process.env.NODE_ENV === `development`) {
+    require('dotenv').config();
+}
 
-const router = require('./routes/index.js')
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const port = process.env.PORT || 3000;
 
-const errHandler = require('./middlewares/errHandler.js')
+const router = require('./routes/index.js');
 
-app.use(cors())
+const errHandler = require('./middlewares/errHandler.js');
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(cors());
 
-app.use('/', router)
-app.use(errHandler)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.listen(port, _ => {
-    console.log(`app is listening on http://localhost:${port}`)
-}) 
+app.use('/', router);
+app.use(errHandler);
+
+app.listen(port, (_) => {
+    console.log(`app is listening on http://localhost:${port}`);
+});
