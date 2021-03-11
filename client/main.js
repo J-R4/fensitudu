@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000'; // ganti dengan url yang heroku
+const baseURL = `https://fensitudu-server.herokuapp.com`; //'http://localhost:3000'; // ganti dengan url yang heroku
 
 $('document').ready(function () {
     view();
